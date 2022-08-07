@@ -95,9 +95,9 @@ class PyAirtable:
 
             if isinstance(self.post_request[jsonKey], list):
                 for i in range(len(self.post_request[jsonKey])):
-                    self.payload[jsonKey][i] = self.payload[jsonKey][i].replace('/', ', ')
+                    self.payload[jsonKey][i] = self.post_request[jsonKey][i].replace('/', ', ')
 
-                self.payload['records'][0]['fields'][airtableName] = self.payload[jsonKey]
+                self.payload['records'][0]['fields'][airtableName] = self.post_request[jsonKey]
 
             elif jsonKey == "creeA":
                 self.payload['records'][0]['fields'][airtableName] = self.generateDate(self.post_request[jsonKey])
