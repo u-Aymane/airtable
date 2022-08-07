@@ -94,14 +94,10 @@ class PyAirtable:
         for jsonKey, airtableName in self.header.items():
 
             if isinstance(self.post_request[jsonKey], list):
-                multiple_choice = []
-                for i in self.post_request[jsonKey]:
-                    if '/' in i:
-                        multiple_choice += i.split("/")
-                    else:
-                        multiple_choice += [i]
+                for i in range(len(self.payload[jsonKey])):
+                    self.payload[jsonKey][i] = self.payload[jsonKey][i].replace('/', ', ')
 
-                self.payload['records'][0]['fields'][airtableName] = multiple_choice
+                self.payload['records'][0]['fields'][airtableName] = self.payload[jsonKey]
             elif jsonKey == "creeA":
                 self.payload['records'][0]['fields'][airtableName] = self.generateDate(self.post_request[jsonKey])
             elif jsonKey == "ticketId":
