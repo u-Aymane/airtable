@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/airtable', methods=['POST'])
 def run():
     if request.method == 'POST':
-        print(request.get_json())
+        print(request.data)
         req = request.get_json()
         if req['action'] == "create":
             agent.createRecord(req)

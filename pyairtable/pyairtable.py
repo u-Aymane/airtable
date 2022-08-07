@@ -30,7 +30,8 @@ class PyAirtable:
             "nomClient": "Nom/prénom client",
             "commentaire": "Commentaires/Dispo du client",
             "creeA": "Créé le",
-            "univers": "Métiers concernés"
+            "univers": "Métiers concernés",
+            "typeIntervention": "Type d'intervention"
         }
 
         self.headers = {
