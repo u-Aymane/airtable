@@ -24,5 +24,5 @@ def run():
 if __name__ == '__main__':
     agent = PyAirtable("Planning d'interventions")
     # agent.updateRecord()
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True, port=1506)
     # main()
