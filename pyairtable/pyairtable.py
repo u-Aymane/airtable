@@ -94,7 +94,7 @@ class PyAirtable:
         for jsonKey, airtableName in self.header.items():
 
             if isinstance(self.post_request[jsonKey], list):
-                for i in range(len(self.payload[jsonKey])):
+                for i in range(len(self.post_request[jsonKey])):
                     self.payload[jsonKey][i] = self.payload[jsonKey][i].replace('/', ', ')
 
                 self.payload['records'][0]['fields'][airtableName] = self.payload[jsonKey]
