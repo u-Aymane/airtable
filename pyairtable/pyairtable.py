@@ -109,6 +109,9 @@ class PyAirtable:
             else:
                 self.payload['records'][0]['fields'][airtableName] = self.post_request[jsonKey]
 
+
+        print(self.payload)
+
     def createRecord(self, post_request: dict):
         if post_request:
             self.post_request = post_request
