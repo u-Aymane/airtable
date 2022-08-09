@@ -31,7 +31,11 @@ class PyAirtable:
             "commentaire": "Commentaires/Dispo du client",
             "creeA": "Créé le",
             "univers": "Métiers concernés",
-            "typeIntervention": "Type d'intervention"
+            "typeIntervention": "Type d'intervention",
+            "nomCoordinateur": "Coordinateur",
+            "nomArtisan": "Artisans",
+            "status": "Statut de l'intervention",
+            "modifiePar": "Modifié par"
         }
 
         self.headers = {
