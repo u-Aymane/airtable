@@ -36,7 +36,8 @@ class PyAirtable:
             "nomCoordinateur": "Coordinateur",
             "nomArtisan": "Artisans",
             "status": "Statut de l'intervention",
-            "modifiePar": "Modifié par"
+            "modifiePar": "Modifié par",
+            "": "Créé par"
         }
 
         self.headers = {
@@ -117,8 +118,12 @@ class PyAirtable:
             dispo = self.post_request["disponibilite"]
             # startAt = self.generateDate(f'{dispo["date"]}T{dispo["starthour"]}:00')
             # endAt = self.generateDate(f'{dispo["date"]}T{dispo["endhour"]}:00')
-            print( f'{dispo["date"]}T{dispo["starthour"]}:00.000Z')
-            recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T{dispo["starthour"]}:00.000Z'
+            if 'starthour' in dispo["date"].keys():
+                print( f'{dispo["date"]}T{dispo["starthour"]}:00.000Z')
+                recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T{dispo["starthour"]}:00.000Z'
+            else:
+                print(f'{dispo["date"]}T00:00.000Z')
+                recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T00:00.000Z'
         print(recordBuild)
 
 
