@@ -54,12 +54,9 @@ class PyAirtable:
             "maxRecords": 1
         }
 
-        print(params)
-
         response = requests.get(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
                                 headers=self.headers, params=params)
-
-        print(response)
+        print(response.text)
         if len(response.json()['records']) > 0:
             self.all_rows = response.json()['records']
         else:
@@ -82,7 +79,7 @@ class PyAirtable:
             return 'not found'
         self.buildPayload()
         self.payload['records'][0]['id'] = self.all_rows[0]['id']
-        # print(self.payload)
+
         print(len(self.all_rows), self.all_rows)
         response = requests.patch(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
                                   headers=self.headers,
@@ -98,17 +95,6 @@ class PyAirtable:
     def buildPayload(self):
         self.post_request = self.post_request['data']
         for jsonKey, airtableName in self.header.items():
-
-            # if isinstance(self.post_request[jsonKey], list):
-            #     multiple_choice = []
-            #     for i in self.post_request[jsonKey]:
-            #         if '/' in i:
-            #             multiple_choice += i.split("/")
-            #         else:
-            #             multiple_choice += [i]
-            #
-            #     self.payload['records'][0]['fields'][airtableName] = multiple_choice
-            print(self.post_request)
             if jsonKey in self.post_request.keys():
                 if self.post_request[jsonKey] == "":
                     pass
@@ -121,14 +107,17 @@ class PyAirtable:
 
         print(self.payload)
 
-    def createRecord(self, post_request: dict):
+    def createRecord(self, post_request: dict, fromUpdate=False):
         if post_request:
             self.post_request = post_request
 
+
+        if not fromUpdate:
+            self.payload['records'][0]['fields']["Statut de l'intervention"] = "A Programmer"
         self.buildPayload()
-        self.payload['records'][0]['fields']["Statut de l'intervention"] = "A Programmer"
+
         response = requests.post(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
                                  headers=self.headers,
                                  json=self.payload)
-
+        print(self.payload)
         print(response.text)

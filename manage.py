@@ -11,10 +11,13 @@ def run():
         req = request.get_json()
         if req['action'] == "create":
             agent.createRecord(req)
+            print('Creating Record! from create')
         elif req['action'] == "update" or req['action'] == "create/update":
             message = agent.updateRecord(req)
+            print('Updating Record!')
             if message is not None:
-                agent.createRecord(req)
+                agent.createRecord(req, fromUpdate=True)
+                print('Creating Record!')
         else:
             return {'status': 'error - action not recognized'}
 
