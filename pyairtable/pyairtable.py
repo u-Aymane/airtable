@@ -5,7 +5,7 @@ import requests
 class PyAirtable:
     def __init__(self, table_name):
         self.all_rows = None
-        self.airtable_base = 'appeKQ5SA38mi66kl'
+        self.airtable_base = 'appKBi6VovD1nbeHJ'
         self.table_name = table_name
         self.payload = {
             "records": [
@@ -41,7 +41,7 @@ class PyAirtable:
         }
 
         self.headers = {
-            "Authorization": "Bearer keyA5f9aRHbmsueYa",
+            "Authorization": "Bearer keyOlIBQGmClGzin1",
             "Content-Type": "application/json"
         }
         self.post_request = None
