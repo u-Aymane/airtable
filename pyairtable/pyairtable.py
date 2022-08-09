@@ -108,6 +108,7 @@ class PyAirtable:
             #             multiple_choice += [i]
             #
             #     self.payload['records'][0]['fields'][airtableName] = multiple_choice
+            print(self.post_request)
             if self.post_request[jsonKey] == "":
                 pass
             elif jsonKey == "creeA":
