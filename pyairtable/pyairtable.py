@@ -104,7 +104,7 @@ class PyAirtable:
             #             multiple_choice += [i]
             #
             #     self.payload['records'][0]['fields'][airtableName] = multiple_choice
-            if self.payload['records'][0]['fields'][airtableName] == "":
+            if self.post_request[jsonKey] == "":
                 pass
             elif jsonKey == "creeA":
                 self.payload['records'][0]['fields'][airtableName] = self.generateDate(self.post_request[jsonKey])
