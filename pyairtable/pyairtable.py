@@ -39,6 +39,7 @@ class PyAirtable:
             "Content-Type": "application/json"
         }
         self.post_request = None
+
     def getAllRecords(self, fields):
         filterByFormula = []
         for key, val in fields.items():
@@ -83,7 +84,7 @@ class PyAirtable:
                                   headers=self.headers,
                                   json=self.payload)
 
-        # print(response.text)
+        print(response.text)
 
     def generateDate(self, string_date):
         return datetime.datetime.strptime(
@@ -110,7 +111,6 @@ class PyAirtable:
             else:
                 self.payload['records'][0]['fields'][airtableName] = self.post_request[jsonKey]
 
-
         print(self.payload)
 
     def createRecord(self, post_request: dict):
@@ -118,6 +118,7 @@ class PyAirtable:
             self.post_request = post_request
 
         self.buildPayload()
+        self.payload['records'][0]['fields']["Statut de l'intervention"] = "A Programmer"
         response = requests.post(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
                                  headers=self.headers,
                                  json=self.payload)
