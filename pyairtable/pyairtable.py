@@ -56,7 +56,7 @@ class PyAirtable:
 
         response = requests.get(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
                                 headers=self.headers, params=params)
-        print(response.text)
+
         if len(response.json()['records']) > 0:
             self.all_rows = response.json()['records']
         else:
@@ -80,12 +80,12 @@ class PyAirtable:
         self.buildPayload()
         self.payload['records'][0]['id'] = self.all_rows[0]['id']
 
-        print(len(self.all_rows), self.all_rows)
+
         response = requests.patch(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
                                   headers=self.headers,
                                   json=self.payload)
 
-        print(response.text)
+
 
     def generateDate(self, string_date):
         return datetime.datetime.strptime(
@@ -105,7 +105,7 @@ class PyAirtable:
                 else:
                     self.payload['records'][0]['fields'][airtableName] = self.post_request[jsonKey]
 
-        print(self.payload)
+
 
     def createRecord(self, post_request: dict, fromUpdate=False):
         if post_request:
@@ -119,5 +119,3 @@ class PyAirtable:
         response = requests.post(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
                                  headers=self.headers,
                                  json=self.payload)
-        print(self.payload)
-        print(response.text)

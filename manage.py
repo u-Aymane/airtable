@@ -7,17 +7,19 @@ app = Flask(__name__)
 @app.route('/airtable', methods=['POST'])
 def run():
     if request.method == 'POST':
-        print(request.data)
         req = request.get_json()
+        print(f'REQUEST: {req}')
         if req['action'] == "create":
             agent.createRecord(req)
-            print('Creating Record! from create')
-        elif req['action'] == "update" or req['action'] == "create/update":
+            print('CREATE OLD!')
+        elif req['action'] == "update":
             message = agent.updateRecord(req)
-            print('Updating Record!')
+            print('UPDATING RECORD!')
+            print(f'return value: {message}')
             if message is not None:
+                print('AFTER NOT FOUND - UPDATING RECORD!')
                 agent.createRecord(req, fromUpdate=True)
-                print('Creating Record!')
+
         else:
             return {'status': 'error - action not recognized'}
 
