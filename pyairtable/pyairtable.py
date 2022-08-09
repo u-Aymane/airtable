@@ -5,6 +5,7 @@ import requests
 class PyAirtable:
     def __init__(self, table_name):
         self.all_rows = None
+        self.airtable_base = 'appR2CFJyDk2lf2Xo'
         self.table_name = table_name
         self.payload = {
             "records": [
@@ -54,7 +55,7 @@ class PyAirtable:
             "maxRecords": 1
         }
 
-        response = requests.get(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
+        response = requests.get(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
                                 headers=self.headers, params=params)
 
         if len(response.json()['records']) > 0:
@@ -81,7 +82,7 @@ class PyAirtable:
         self.payload['records'][0]['id'] = self.all_rows[0]['id']
 
 
-        response = requests.patch(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
+        response = requests.patch(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
                                   headers=self.headers,
                                   json=self.payload)
 
@@ -116,6 +117,6 @@ class PyAirtable:
             self.payload['records'][0]['fields']["Statut de l'intervention"] = "A Programmer"
         self.buildPayload()
 
-        response = requests.post(f"https://api.airtable.com/v0/app1a68POzN9C7dHL/{self.table_name}",
+        response = requests.post(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
                                  headers=self.headers,
                                  json=self.payload)

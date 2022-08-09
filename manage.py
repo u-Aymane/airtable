@@ -18,7 +18,7 @@ def run():
             print(f'return value: {message}')
             if message is not None:
                 print('AFTER NOT FOUND - UPDATING RECORD!')
-                agent.createRecord(req, fromUpdate=True)
+                agent.createRecord(req)
 
         else:
             return {'status': 'error - action not recognized'}
