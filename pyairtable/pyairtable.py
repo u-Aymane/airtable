@@ -109,7 +109,11 @@ class PyAirtable:
                 elif jsonKey == "creeA" or 'date' in jsonKey:
                     recordBuild[airtableName] = self.generateDate(self.post_request[jsonKey])
                 elif jsonKey == "ticketId":
-                    recordBuild[airtableName] = int(self.post_request[jsonKey])
+                    try:
+                        recordBuild[airtableName] = int(self.post_request[jsonKey])
+                    except Exception as e:
+                        print(f'Ticket not added or not Integer')
+
                 elif jsonKey == "nomArtisan":
                     recordBuild[airtableName] = ', '.join(self.post_request[jsonKey])
                 else:
