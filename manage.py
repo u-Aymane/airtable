@@ -17,7 +17,7 @@ def run():
             print('UPDATING RECORD!')
             print(f'return value: {message}')
             if message is not None:
-                print('AFTER NOT FOUND - UPDATING RECORD!')
+                print('AFTER NOT FOUND - CREATING RECORD!')
                 agent.createRecord(req)
 
         else:
@@ -28,6 +28,4 @@ def run():
 
 if __name__ == '__main__':
     agent = PyAirtable("Planning d'interventions")
-    # agent.updateRecord()
     app.run(host="0.0.0.0", debug=True, port=1506)
-    # main()

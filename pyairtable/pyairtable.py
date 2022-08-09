@@ -74,19 +74,24 @@ class PyAirtable:
         return self.getAllRecords(fields)
 
     def updateRecord(self, post_request: dict):
-        if post_request:
-            self.post_request = post_request
-        if self.searchRecord() == -1:
-            return 'not found'
-        self.buildPayload()
-        self.payload['records'][0]['id'] = self.all_rows[0]['id']
+
+        self.post_request = post_request
+        if self.post_request['key'] != {}:
+            if self.searchRecord() == -1:
+                return 'not found'
+            self.buildPayload()
+            self.payload['records'][0]['id'] = self.all_rows[0]['id']
+
+            print(f'UPDATE PAYLOAD: {self.payload}')
 
 
-        response = requests.patch(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
-                                  headers=self.headers,
-                                  json=self.payload)
+            response = requests.patch(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
+                                      headers=self.headers,
+                                      json=self.payload)
 
-
+            print(f'RESPONSE UPDATE: {response.json()}')
+        else:
+            print(f'NO FILTER TO APPLY!')
 
     def generateDate(self, string_date):
         return datetime.datetime.strptime(
@@ -95,22 +100,31 @@ class PyAirtable:
 
     def buildPayload(self):
         self.post_request = self.post_request['data']
+        recordBuild = self.payload['records'][0]['fields']
         for jsonKey, airtableName in self.header.items():
             if jsonKey in self.post_request.keys():
                 if self.post_request[jsonKey] == "":
                     pass
-                elif jsonKey == "creeA":
-                    self.payload['records'][0]['fields'][airtableName] = self.generateDate(self.post_request[jsonKey])
+                elif jsonKey == "creeA" or 'date' in jsonKey:
+                    recordBuild[airtableName] = self.generateDate(self.post_request[jsonKey])
                 elif jsonKey == "ticketId":
-                    self.payload['records'][0]['fields'][airtableName] = int(self.post_request[jsonKey])
+                    recordBuild[airtableName] = int(self.post_request[jsonKey])
+                elif jsonKey == "nomArtisan":
+                    recordBuild[airtableName] = ', '.join(self.post_request[jsonKey])
                 else:
-                    self.payload['records'][0]['fields'][airtableName] = self.post_request[jsonKey]
+                    recordBuild[airtableName] = self.post_request[jsonKey]
+        if 'disponibilite' in self.post_request.keys():
+            dispo = self.post_request["disponibilite"]
+            # startAt = self.generateDate(f'{dispo["date"]}T{dispo["starthour"]}:00')
+            # endAt = self.generateDate(f'{dispo["date"]}T{dispo["endhour"]}:00')
+            print( f'{dispo["date"]}T{dispo["starthour"]}:00.000Z')
+            recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T{dispo["starthour"]}:00.000Z'
+        print(recordBuild)
 
 
 
     def createRecord(self, post_request: dict, fromUpdate=False):
-        if post_request:
-            self.post_request = post_request
+        self.post_request = post_request
 
 
         if not fromUpdate:
@@ -120,3 +134,5 @@ class PyAirtable:
         response = requests.post(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
                                  headers=self.headers,
                                  json=self.payload)
+
+        print(f'ON CREATE RESPONSE: {response.json()}')
