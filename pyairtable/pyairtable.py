@@ -12,11 +12,12 @@ class PyAirtable:
                 {
                     "fields": {
 
-                    },
-                    "typecast": 'true'
-                },
+                    }
 
-            ]
+                }
+
+            ],
+            "typecast": True
 
         }
         self.header_array = ["ID Ticket", "Nom/prénom client", "Métiers concernés", "Coordinateur",
