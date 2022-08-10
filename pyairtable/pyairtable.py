@@ -70,7 +70,7 @@ class PyAirtable:
         return self.getAllRecords(fields)
 
     def updateRecord(self, post_request: dict):
-
+        # fixed
         self.post_request = post_request
         if self.post_request['key'] != {}:
             if self.searchRecord() == -1:
