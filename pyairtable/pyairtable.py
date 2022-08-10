@@ -66,11 +66,7 @@ class PyAirtable:
     def searchRecord(self):
         fields = {}
         for key, val in self.post_request['key'].items():
-            if key == "creeA":
-                fields[self.header[key]] = self.generateDate(val)
-            else:
-                fields[self.header[key]] = val
-
+            fields[self.header[key]] = val
         return self.getAllRecords(fields)
 
     def updateRecord(self, post_request: dict):
