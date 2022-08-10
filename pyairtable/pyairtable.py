@@ -125,7 +125,7 @@ class PyAirtable:
             # endAt = self.generateDate(f'{dispo["date"]}T{dispo["endhour"]}:00')
             if 'starthour' in dispo.keys():
                 print(f'{dispo["date"]}T{dispo["starthour"]}:00.000Z')
-                recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T{dispo["starthour"]}:00:00.000Z'
+                recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T{dispo["starthour"]}:00.000Z'
             else:
                 print(f'{dispo["date"]}T00:00.000Z')
                 recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T00:00:00.000Z'
