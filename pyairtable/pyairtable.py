@@ -105,10 +105,7 @@ class PyAirtable:
                 if self.post_request[jsonKey] == "":
                     pass
                 elif jsonKey == "creeA":
-                    if create:
-                        pass
-                    else:
-                        recordBuild[airtableName] = self.post_request[jsonKey]
+                    recordBuild[airtableName] = self.post_request[jsonKey]
                 elif jsonKey == "ticketId":
                     try:
                         recordBuild[airtableName] = int(self.post_request[jsonKey])
