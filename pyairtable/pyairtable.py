@@ -30,7 +30,7 @@ class PyAirtable:
             "ticketId": "ID Ticket",
             "nomClient": "Nom/prénom client",
             "commentaire": "Commentaires/Dispo du client",
-            # "creeA": "Créé le",
+            "creeA": "Créé le",
             "univers": "Métiers concernés",
             "typeIntervention": "Type d'intervention",
             "nomCoordinateur": "Coordinateur",
@@ -84,7 +84,6 @@ class PyAirtable:
 
             print(f'UPDATE PAYLOAD: {self.payload}')
 
-
             response = requests.patch(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
                                       headers=self.headers,
                                       json=self.payload)
@@ -98,15 +97,18 @@ class PyAirtable:
             string_date.split('.')[0].replace('T', ' '), "%Y-%m-%d %H:%M:%S"). \
             strftime("%m/%d/%Y %I:%M%p").lower()
 
-    def buildPayload(self):
+    def buildPayload(self, create=False):
         self.post_request = self.post_request['data']
         recordBuild = self.payload['records'][0]['fields']
         for jsonKey, airtableName in self.header.items():
             if jsonKey in self.post_request.keys():
                 if self.post_request[jsonKey] == "":
                     pass
-                elif jsonKey == "creeA" or 'date' in jsonKey:
-                    recordBuild[airtableName] = self.post_request[jsonKey]
+                elif jsonKey == "creeA":
+                    if create:
+                        pass
+                    else:
+                        recordBuild[airtableName] = self.post_request[jsonKey]
                 elif jsonKey == "ticketId":
                     try:
                         recordBuild[airtableName] = int(self.post_request[jsonKey])
@@ -122,22 +124,19 @@ class PyAirtable:
             # startAt = self.generateDate(f'{dispo["date"]}T{dispo["starthour"]}:00')
             # endAt = self.generateDate(f'{dispo["date"]}T{dispo["endhour"]}:00')
             if 'starthour' in dispo.keys():
-                print( f'{dispo["date"]}T{dispo["starthour"]}:00.000Z')
+                print(f'{dispo["date"]}T{dispo["starthour"]}:00.000Z')
                 recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T{dispo["starthour"]}:00:00.000Z'
             else:
                 print(f'{dispo["date"]}T00:00.000Z')
                 recordBuild["Date/heure de l'intervention"] = f'{dispo["date"]}T00:00:00.000Z'
         print(recordBuild)
 
-
-
     def createRecord(self, post_request: dict, fromUpdate=False):
         self.post_request = post_request
 
-
         if not fromUpdate:
             self.payload['records'][0]['fields']["Statut de l'intervention"] = "A Programmer"
-        self.buildPayload()
+        self.buildPayload(create=True)
 
         response = requests.post(f"https://api.airtable.com/v0/{self.airtable_base}/{self.table_name}",
                                  headers=self.headers,
