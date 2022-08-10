@@ -13,7 +13,7 @@ class PyAirtable:
                     "fields": {
 
                     },
-                    "typecast": True
+                    "typecast": 'true'
                 },
 
             ]
