@@ -30,7 +30,7 @@ class PyAirtable:
             "ticketId": "ID Ticket",
             "nomClient": "Nom/prénom client",
             "commentaire": "Commentaires/Dispo du client",
-            "creeA": "Créé le",
+            # "creeA": "Créé le",
             "univers": "Métiers concernés",
             "typeIntervention": "Type d'intervention",
             "nomCoordinateur": "Coordinateur",
